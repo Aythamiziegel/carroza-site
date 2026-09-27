@@ -259,15 +259,16 @@ header.sc{background:rgba(10,10,10,.96);backdrop-filter:blur(18px);border-bottom
     rgba(8,8,8,.34) 80%,
     rgba(8,8,8,.10) 92%,
     transparent 100%)}
-.dc .ix{font-family:var(--disp);font-size:.8rem;color:var(--red);
+.dc .ix{font-family:var(--disp);font-size:.8rem;color:var(--red);margin-bottom:auto;
   text-shadow:0 1px 10px rgba(0,0,0,.7)}
 .dc h3{font-size:1.3rem;margin-bottom:7px;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.55)}
 .dc .wn{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;margin-bottom:8px}
-/* margin-top:auto empuja este bloque (descripción + pie) al fondo, dejando
-   arriba el número/título/fecha con su altura natural. La altura fija con
-   line-clamp evita que una descripción de 1 línea o de 3 mueva el pie —
-   así el título queda a la misma altura en todas las tarjetas. */
-.dc .wt{font-size:.8rem;color:rgba(255,255,255,.8);line-height:1.5;margin-top:auto;
+/* Todo el texto (título, fecha, descripción y precio) sigue agrupado abajo,
+   sobre el degradado oscuro, como en el diseño original. La altura fija de
+   la descripción (2 líneas, se recorta si es más larga) es lo que hace que
+   ese bloque mida siempre lo mismo y el título quede a la misma altura en
+   todas las tarjetas — sin mover el título fuera del degradado. */
+.dc .wt{font-size:.8rem;color:rgba(255,255,255,.8);line-height:1.5;
   display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;
   min-height:2.4rem}
 .dc .pz{display:inline-flex;align-items:baseline;gap:8px;margin-top:12px;font-family:var(--disp);
