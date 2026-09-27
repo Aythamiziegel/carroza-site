@@ -2468,6 +2468,12 @@ function actualizar(){
       if (!v) { inp.classList.add('err'); return; }
       codigoOK = v.toUpperCase();
       pidiendoCodigo = false;
+      /* El código ya está puesto: se compra AHORA MISMO, sin pedir un
+         segundo clic en "Comprar". Recalculamos la URL con el código ya
+         aplicado (la de arriba se generó sin él). */
+      var urlConCodigo = ttURL({ codigo: codigoOK, ref: ids.join('-') });
+      if (TT.modo === 'nueva') { window.open(urlConCodigo, '_blank', 'noopener'); }
+      else { abrirCompra(urlConCodigo); }
       actualizar();
     };
     $('btnCod').addEventListener('click', probar);
