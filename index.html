@@ -1583,8 +1583,8 @@ footer{border-top:1px solid var(--line);padding:50px 0 28px}
         Le llega al móvil en un minuto.
       </p>
       <p class="lead" style="margin-top:14px">
-        Y llega en buen momento: hasta el <strong style="color:#fff;font-weight:500">30 de noviembre</strong> va al
-        <strong style="color:#fff;font-weight:500">precio de lanzamiento</strong>, justo antes de Navidad. El mejor regalo de las fiestas, y al mejor precio del año.
+        Y llega en buen momento: hasta el <strong style="color:#fff;font-weight:500">31 de diciembre</strong> va al
+        <strong style="color:#fff;font-weight:500">precio de lanzamiento</strong>, antes de que acabe el año. El mejor regalo de las fiestas, y al mejor precio del año.
       </p>
 
       <div class="rg-p">
@@ -1641,7 +1641,7 @@ footer{border-top:1px solid var(--line);padding:50px 0 28px}
       <div class="q rv"><button>¿Se va de pie todo el recorrido?</button><div class="a"><p>Sí. Esto es una carroza y esto es una fiesta: se va de pie, se baila y hay espacio de sobra para moverse sin pelearte con nadie. Ven con calzado cómodo, que son muchas horas.</p></div></div>
       <div class="q rv"><button>¿Qué música se pincha?</button><div class="a"><p>Clásicos y tendencias, variado y para todos los gustos, con una sola regla: <strong>si no te hace mover las caderas, no entra</strong>. Carnavalera, salsa, merengue, reguetón, bachata, rumba y lo que suena ahora mismo. <strong>Borja Cruz</strong> es el DJ residente de la temporada, en las seis salidas — el mismo siempre, que conoce la carroza y sabe qué suena a las cuatro de la tarde y qué suena a medianoche.</p></div></div>
       <div class="q rv"><button>He visto carrozas más baratas. ¿Por qué esta cuesta más?</button><div class="a"><p>Porque cuesta más hacerla. Barra libre de verdad y sin ticket, comida que no se acaba, camareros profesionales, tres baños de diseño, seguridad privada, el mismo DJ toda la temporada, guagua incluida al sur y una carroza que la gente fotografía desde la acera. <strong>No competimos por precio y no vamos a fingir que sí.</strong> Si buscas lo más barato, hay opciones mejores que nosotros. Si buscas que dentro de veinte años lo sigas contando, ya sabes dónde estamos.</p></div></div>
-      <div class="q rv"><button>¿Cómo funcionan los descuentos?</button><div class="a"><p>Son automáticos: se aplican solos, no hay códigos que buscar. <strong>Compra anticipada:</strong> hasta el 30 de noviembre de 2026 o mientras queden entradas de lanzamiento, Las Palmas y Maspalomas están más baratas que su precio final. A partir de ahí suben. <strong>Las dos grandes juntas:</strong> 10 € menos sobre el total por llevarte Las Palmas y Maspalomas a la vez. El resto de salidas están por confirmar: si al final salen, avisamos primero a quien esté en la lista.</p></div></div>
+      <div class="q rv"><button>¿Cómo funcionan los descuentos?</button><div class="a"><p>Son automáticos: se aplican solos, no hay códigos que buscar. <strong>Compra anticipada:</strong> hasta el 31 de diciembre de 2026 o mientras queden entradas de lanzamiento, Las Palmas y Maspalomas están más baratas que su precio final. A partir de ahí suben. <strong>Las dos grandes juntas:</strong> 10 € menos sobre el total por llevarte Las Palmas y Maspalomas a la vez. El resto de salidas están por confirmar: si al final salen, avisamos primero a quien esté en la lista.</p></div></div>
       <div class="q rv"><button>¿Puedo regalar una entrada?</button><div class="a"><p>Sí. Compras la plaza, nos dices a quién se la regalas y le mandamos una tarjeta digital con su nombre, por WhatsApp o por correo. Nada físico, nada que se pierda. La entrada es nominativa, así que va directamente a su nombre, y si es para Las Palmas o Maspalomas el código de acceso va dentro del regalo.</p></div></div>
       <div class="q rv"><button>¿El Pride de Maspalomas y el de Gáldar son lo mismo?</button><div class="a"><p>No, son dos eventos distintos y dos salidas distintas. El de Maspalomas es el 8 de mayo; el de Gáldar, en el norte, tiene otra fecha y otro ambiente. Se compran por separado.</p></div></div>
       <div class="q rv"><button>¿Cuánta gente sube a la carroza?</button><div class="a"><p>El aforo es limitado y se controla en el acceso. No vendemos más plazas de las que caben con holgura: queremos que puedas moverte, bailar y llegar a la barra sin pelearte con nadie. Cuando una salida se agota, se cierra.</p></div></div>
@@ -1793,7 +1793,7 @@ footer{border-top:1px solid var(--line);padding:50px 0 28px}
    ═════════════════════════════════════════════════════════════════════════ */
 const SALIDAS = [
   { id:'lpgc', n:'Las Palmas de G.C.', fecha:'Sábado 20 · Febrero 2027', iso:'2027-02-20T16:00:00',
-    precio:130, grande:true, codigo:true, jamon:true, img:'/cal-1.webp',
+    precio:120, grande:true, codigo:true, jamon:true, img:'/cal-1.webp',
     txt:'La Gran Cabalgata. Más de 140.000 personas. Con jamón de bellota cortado a bordo.' },
 
   { id:'mas', n:'Maspalomas', fecha:'Sábado 13 · Marzo 2027', iso:'2027-03-13T17:00:00',
@@ -1830,7 +1830,7 @@ const SALIDAS = [
 /* ═══════ PRECIOS Y DESCUENTOS ═══════
    Dos palancas, y solo dos, para que se entienda a la primera:
 
-   1 · COMPRA ANTICIPADA — hasta el 30 de noviembre de 2026.
+   1 · COMPRA ANTICIPADA — hasta el 31 de diciembre de 2026.
        Carrizal, Telde y Gáldar bajan de 75 € a 60 € (el Pride de Maspalomas
        mantiene su precio: es premium y solo baja en el combo del sur). Es una
        fecha, no un truco: necesitas la caja antes de pagar camiones y luminosos.
@@ -1848,11 +1848,11 @@ const DESC = {
      Actualiza "vendidas" de vez en cuando: el contador de la web lo usa
      para decir cuántas quedan, y eso es lo que empuja a comprar hoy.      */
   anticipada: {
-    hasta:     '2026-11-30T23:59:59',
+    hasta:     '2026-12-31T23:59:59',
     plazas:    80,   // las primeras 80 entradas llevan el precio de lanzamiento
     vendidas:  0,    // ← ACTUALIZA ESTE NÚMERO
     descuento: 15,   // € que baja cada salida PEQUEÑA  (75 € → 60 €), si reactivas alguna
-    grandes:   10,   // € que baja cada salida GRANDE   (130 → 120 · 150 → 140)
+    grandes:   10,   // € que baja cada salida GRANDE   (120 → 110 · 150 → 140)
   },
   dosGrandes: 10,    // € de descuento por llevarte Las Palmas + Maspalomas
 
@@ -2627,7 +2627,7 @@ if (!ANTICIPADA) {
 } else {
   var pct = Math.round((A.vendidas / A.plazas) * 100);
 
-  $('urgT').innerHTML = 'Se acaba el 30 de noviembre<br>o al vender 80 entradas.<br>'
+  $('urgT').innerHTML = 'Se acaba el 31 de diciembre<br>o al vender 80 entradas.<br>'
     + '<span style="color:var(--lime)">Lo que pase antes.</span>';
 
   $('urgN').innerHTML = A.vendidas === 0
@@ -2636,7 +2636,7 @@ if (!ANTICIPADA) {
 
   $('urgFill').style.width = Math.max(pct, 3) + '%';
 
-  /* El reloj hasta el 30 de noviembre, latiendo de verdad */
+  /* El reloj hasta el 31 de diciembre, latiendo de verdad */
   var fin = new Date(A.hasta).getTime();
   var tic = function(){
     var t = fin - Date.now();
@@ -2669,7 +2669,7 @@ $('leadPrecios').innerHTML =
   + (ANTICIPADA
       ? '<strong style="color:var(--ink);font-weight:500">Precio de lanzamiento: '
         + eur(A.grandes) + ' menos en cada una. Quedan ' + QUEDAN + ' entradas a este precio, '
-        + 'y se acaba el 30 de noviembre — lo que pase antes.</strong> '
+        + 'y se acaba el 31 de diciembre — lo que pase antes.</strong> '
       : '')
   + 'Llévate las dos juntas y baja ' + eur(DESC.dosGrandes) + ' más sobre el total. '
   + 'El resto de salidas están por confirmar: apúntate en la lista y tienes prioridad si al final salen.';
