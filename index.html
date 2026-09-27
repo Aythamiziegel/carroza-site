@@ -286,6 +286,11 @@ header.sc{background:rgba(10,10,10,.96);backdrop-filter:blur(18px);border-bottom
 .dc-l.wait{color:var(--muted);border-color:var(--muted-2)}
 .dc-l.ag{color:var(--red);border-color:var(--red)}
 
+/* Pie de tarjeta con altura fija: sin esto, el título flota a distinta
+   altura según si la tarjeta lleva precio o "por confirmar" (bloques de
+   distinta altura empujando hacia arriba en el flex bottom-anchored). */
+.dc-foot{min-height:88px;display:flex;flex-direction:column;justify-content:flex-end}
+
 /* LA CARTA */
 .ct{display:grid;gap:16px}
 .ct-c{border:1px solid var(--line);border-radius:18px;padding:26px 24px;background:var(--ink-2)}
@@ -2130,7 +2135,7 @@ $('cal').innerHTML = SALIDAS.map(function(s, i){
     + '<h3 class="d">' + s.n + '</h3>'
     + '<div class="wn">' + s.fecha + '</div>'
     + '<p class="wt">' + s.txt + '</p>'
-    + bloquePrecio
+    + '<div class="dc-foot">' + bloquePrecio + '</div>'
     + '</div></article>';
 }).join('');
 
