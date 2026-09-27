@@ -377,6 +377,7 @@ header.sc{background:rgba(10,10,10,.96);backdrop-filter:blur(18px);border-bottom
 .light .pk .in .tg.bs{border-color:var(--on-lime);background:var(--lime);color:var(--on-lime)}
 .pk .in .tg.ag{background:var(--red);color:#fff;border-radius:var(--r)}
 .pk .in .tg.pf{border:1px solid var(--muted-2);color:var(--muted);border-radius:var(--r)}
+.pk .in .tg.af{border:1px solid var(--red);color:var(--red);border-radius:var(--r)}
 
 /* Salida agotada: sigue en la lista, pero ya no se compra */
 .pk.out{opacity:.55;cursor:default}
@@ -1282,7 +1283,8 @@ footer{border-top:1px solid var(--line);padding:50px 0 28px}
           <button class="ps" data-preset="nada">Empezar de cero</button>
         </div>
         <p class="anc" style="margin:12px 2px 0;font-size:.82rem;color:#5A5A5A;line-height:1.55">
-          <strong style="color:#0A0A0A">Las Palmas y Maspalomas juntas bajan 10&nbsp;€</strong> sobre el total.
+          <strong style="color:#0A0A0A">Aforo real y limitado: 140 plazas por salida.</strong>
+          El año pasado hubo overbooking y se quedó gente fuera — cuando se agoten, se acabó.
           El resto de salidas están por confirmar — apúntate en la lista y tienes prioridad si salimos.
         </p>
         <div class="picks" id="pick"></div>
@@ -1646,7 +1648,7 @@ footer{border-top:1px solid var(--line);padding:50px 0 28px}
       <div class="q rv"><button>¿Se va de pie todo el recorrido?</button><div class="a"><p>Sí. Esto es una carroza y esto es una fiesta: se va de pie, se baila y hay espacio de sobra para moverse sin pelearte con nadie. Ven con calzado cómodo, que son muchas horas.</p></div></div>
       <div class="q rv"><button>¿Qué música se pincha?</button><div class="a"><p>Clásicos y tendencias, variado y para todos los gustos, con una sola regla: <strong>si no te hace mover las caderas, no entra</strong>. Carnavalera, salsa, merengue, reguetón, bachata, rumba y lo que suena ahora mismo. <strong>Borja Cruz</strong> es el DJ residente de la temporada, en las seis salidas — el mismo siempre, que conoce la carroza y sabe qué suena a las cuatro de la tarde y qué suena a medianoche.</p></div></div>
       <div class="q rv"><button>He visto carrozas más baratas. ¿Por qué esta cuesta más?</button><div class="a"><p>Porque cuesta más hacerla. Barra libre de verdad y sin ticket, comida que no se acaba, camareros profesionales, tres baños de diseño, seguridad privada, el mismo DJ toda la temporada, guagua incluida al sur y una carroza que la gente fotografía desde la acera. <strong>No competimos por precio y no vamos a fingir que sí.</strong> Si buscas lo más barato, hay opciones mejores que nosotros. Si buscas que dentro de veinte años lo sigas contando, ya sabes dónde estamos.</p></div></div>
-      <div class="q rv"><button>¿Cómo funcionan los descuentos?</button><div class="a"><p>Son automáticos: se aplican solos, no hay códigos que buscar. <strong>Compra anticipada:</strong> hasta el 31 de diciembre de 2026 o mientras queden entradas de lanzamiento, Las Palmas y Maspalomas están más baratas que su precio final. A partir de ahí suben. <strong>Las dos grandes juntas:</strong> 10 € menos sobre el total por llevarte Las Palmas y Maspalomas a la vez. El resto de salidas están por confirmar: si al final salen, avisamos primero a quien esté en la lista.</p></div></div>
+      <div class="q rv"><button>¿Cómo funcionan los descuentos?</button><div class="a"><p>Es automático: se aplica solo, no hay códigos que buscar. <strong>Compra anticipada:</strong> hasta el 31 de diciembre de 2026 o mientras queden entradas de lanzamiento, Las Palmas y Maspalomas están más baratas que su precio final. A partir de ahí suben. No hay descuento aparte por llevarte las dos juntas: cada carroza tiene un aforo real y limitado de 140 plazas, y el año pasado se agotaron con overbooking incluido. El resto de salidas están por confirmar: si al final salen, avisamos primero a quien esté en la lista.</p></div></div>
       <div class="q rv"><button>¿Puedo regalar una entrada?</button><div class="a"><p>Sí. Compras la plaza, nos dices a quién se la regalas y le mandamos una tarjeta digital con su nombre, por WhatsApp o por correo. Nada físico, nada que se pierda. La entrada es nominativa, así que va directamente a su nombre, y si es para Las Palmas o Maspalomas el código de acceso va dentro del regalo.</p></div></div>
       <div class="q rv"><button>¿El Pride de Maspalomas y el de Gáldar son lo mismo?</button><div class="a"><p>No, son dos eventos distintos y dos salidas distintas. El de Maspalomas es el 8 de mayo; el de Gáldar, en el norte, tiene otra fecha y otro ambiente. Se compran por separado.</p></div></div>
       <div class="q rv"><button>¿Cuánta gente sube a la carroza?</button><div class="a"><p>El aforo es limitado y se controla en el acceso. No vendemos más plazas de las que caben con holgura: queremos que puedas moverte, bailar y llegar a la barra sin pelearte con nadie. Cuando una salida se agota, se cierra.</p></div></div>
@@ -1797,12 +1799,18 @@ footer{border-top:1px solid var(--line);padding:50px 0 28px}
    Todos los precios son FINALES: llevan el IGIC incluido.
    ═════════════════════════════════════════════════════════════════════════ */
 const SALIDAS = [
+  /* aforo/vendidas: aforo REAL de esa salida (el año pasado hubo overbooking,
+     así que esto es un límite de verdad, no un truco de marketing).
+     Actualiza "vendidas" de vez en cuando — es lo que mueve el contador
+     de "quedan X plazas" en la web. */
   { id:'lpgc', n:'Las Palmas de G.C.', fecha:'Sábado 20 · Febrero 2027', iso:'2027-02-20T16:00:00',
     precio:120, grande:true, codigo:true, jamon:true, img:'/cal-1.webp',
+    aforo:140, vendidas:0,
     txt:'La Gran Cabalgata. Más de 140.000 personas. Con jamón de bellota cortado a bordo.' },
 
   { id:'mas', n:'Maspalomas', fecha:'Sábado 13 · Marzo 2027', iso:'2027-03-13T17:00:00',
     precio:150, grande:true, codigo:true, jamon:true, guagua:true, img:'/cal-2.webp',
+    aforo:140, vendidas:0,
     txt:'La cabalgata más grande de Canarias. 350.000 personas. Jamón de bellota y guagua incluida desde Las Palmas, Telde o Vecindario.' },
 
   /* Cuando una salida se agote, ponle  agotado:true  y la web deja de venderla:
@@ -1833,14 +1841,17 @@ const SALIDAS = [
 ];
 
 /* ═══════ PRECIOS Y DESCUENTOS ═══════
-   Dos palancas, y solo dos, para que se entienda a la primera:
+   Una sola palanca de precio, para que se entienda a la primera:
 
-   1 · COMPRA ANTICIPADA — hasta el 31 de diciembre de 2026.
-       Carrizal, Telde y Gáldar bajan de 75 € a 60 € (el Pride de Maspalomas
-       mantiene su precio: es premium y solo baja en el combo del sur). Es una
-       fecha, no un truco: necesitas la caja antes de pagar camiones y luminosos.
+   COMPRA ANTICIPADA — hasta el 31 de diciembre de 2026.
+   Carrizal, Telde y Gáldar bajan de 75 € a 60 € (el Pride de Maspalomas
+   mantiene su precio: es premium y solo baja en el combo del sur). Es una
+   fecha, no un truco: necesitas la caja antes de pagar camiones y luminosos.
 
-   2 · LAS DOS GRANDES JUNTAS — 10 € menos.
+   Las Palmas y Maspalomas NO llevan descuento por comprarlas juntas: cada
+   carroza vale lo que vale. Lo que empuja a comprar ya es el aforo real y
+   limitado (140 plazas por salida, ver "aforo/vendidas" en SALIDAS arriba)
+   — el año pasado hubo overbooking y se quedó gente fuera.
 
    El Abono se retiró de la venta: mientras las pequeñas y el Pride de
    Maspalomas estén en "espera" (ver SALIDAS arriba), no se puede vender
@@ -1859,7 +1870,9 @@ const DESC = {
     descuento: 15,   // € que baja cada salida PEQUEÑA  (75 € → 60 €), si reactivas alguna
     grandes:   10,   // € que baja cada salida GRANDE   (120 → 110 · 150 → 140)
   },
-  dosGrandes: 10,    // € de descuento por llevarte Las Palmas + Maspalomas
+  /* Las dos grandes juntas ya NO llevan descuento aparte: cada carroza vale
+     lo que vale. El empujón es el aforo limitado (140 plazas por salida),
+     no un descuento por combo — ver AFORO más abajo. */
 
   /* COMBO "EL SUR, DOS VECES": Gran Cabalgata de Maspalomas + su Pride.
      Dormido mientras el Pride de Maspalomas esté en espera. */
@@ -2152,8 +2165,9 @@ var precioDe = function(ids, pax){
     return a + Math.max(0, precioPeq(s) - dGrupo);
   }, 0);
 
-  var lasDos = ids.indexOf('lpgc') > -1 && ids.indexOf('mas') > -1;
-  if (lasDos) total -= DESC.dosGrandes;
+  /* Las dos grandes NO llevan descuento por ir juntas: cada carroza vale lo
+     que vale. El aforo limitado (140 plazas por salida) es el empujón,
+     no el precio — ver el aviso de aforo bajo el selector. */
 
   /* Combo "el sur, dos veces": Maspalomas + su Pride juntos */
   var comboSur = ids.indexOf('mas') > -1 && ids.indexOf('pride-mas') > -1;
@@ -2162,7 +2176,7 @@ var precioDe = function(ids, pax){
   var dPack = packPeq(nPeq);
   total -= dPack;
 
-  return { bruto: bruto, total: total, abono: false, lasDos: lasDos, comboSur: comboSur,
+  return { bruto: bruto, total: total, abono: false, comboSur: comboSur,
            nPeq: nPeq, dPack: dPack, dGrupo: dGrupo, pax: pax, ant: ANTICIPADA };
 };
 
@@ -2181,6 +2195,10 @@ $('pick').innerHTML = SALIDAS.map(function(s){
   if (s.jamon)  tags += '<i class="tg jm">Jamón de bellota</i>';
   if (s.guagua) tags += '<i class="tg bs">' + BUS + ' Guagua incluida</i>';
   if (s.codigo && !s.agotado) tags += '<i class="tg lk">' + CANDADO + ' Con código</i>';
+  if (s.aforo && !s.agotado) {
+    var quedan = Math.max(0, s.aforo - (s.vendidas || 0));
+    tags += '<i class="tg af">Quedan ' + quedan + ' de ' + s.aforo + '</i>';
+  }
 
   /* Una salida agotada o en espera NO se puede marcar, pero sigue en la lista
      y sigue trabajando: empuja a apuntarse a la lista de espera. Agotado =
@@ -2306,7 +2324,6 @@ function actualizar(){
       + 'por venir ' + PAX + ' personas');
     if (r.dPack) motivos.push('<strong>' + eur(r.dPack) + ' menos</strong> por juntar '
       + r.nPeq + ' salidas pequeñas');
-    if (r.lasDos) motivos.push('<strong>' + eur(DESC.dosGrandes) + '</strong> por las dos grandes juntas');
     if (r.comboSur) motivos.push('<strong>' + eur(DESC.comboSur) + ' menos</strong> por el combo del sur (Maspalomas + su Pride)');
     nota = motivos.join(' · ') + '. Barra, comida, DJ y seguridad incluidos.';
   } else if (PAX >= GRUPO.escalones[0].desde && !r.nPeq) {
@@ -2670,13 +2687,17 @@ if (!ANTICIPADA) {
   tic(); setInterval(tic, 1000);
 }
 
-/* ═══════ TIRA DE DESCUENTOS ═══════
+/* ═══════ TIRA DE AFORO ═══════
    Mientras las pequeñas y los prides estén en espera, aquí solo hay sitio
-   para lo que de verdad se puede comprar hoy: las dos grandes. */
+   para lo que de verdad se puede comprar hoy: las dos grandes. Sin
+   descuento por combo — el empujón es el aforo real y limitado. */
+var qLPGC = Math.max(0, sal('lpgc').aforo - sal('lpgc').vendidas);
+var qMAS  = Math.max(0, sal('mas').aforo  - sal('mas').vendidas);
 $('esc').innerHTML = (ANTICIPADA
   ? '<span>Lanzamiento · grandes <b>−' + eur(A.grandes) + '</b></span>'
   : '')
-  + '<span>Las dos grandes juntas · <b>−' + eur(DESC.dosGrandes) + '</b></span>';
+  + '<span>Las Palmas · quedan <b>' + qLPGC + ' de ' + sal('lpgc').aforo + '</b></span>'
+  + '<span>Maspalomas · quedan <b>' + qMAS + ' de ' + sal('mas').aforo + '</b></span>';
 
 /* El texto de la sección se escribe solo desde DESC. Así no se queda desfasado
    cuando cambies un precio: cambias el número arriba y aquí cambia también. */
@@ -2687,7 +2708,8 @@ $('leadPrecios').innerHTML =
         + eur(A.grandes) + ' menos en cada una. Quedan ' + QUEDAN + ' entradas a este precio, '
         + 'y se acaba el 31 de diciembre — lo que pase antes.</strong> '
       : '')
-  + 'Llévate las dos juntas y baja ' + eur(DESC.dosGrandes) + ' más sobre el total. '
+  + 'Aforo real y limitado: 140 plazas por salida — el año pasado hubo overbooking '
+  + 'y se quedó gente fuera. No hay descuento por llevarte las dos juntas. '
   + 'El resto de salidas están por confirmar: apúntate en la lista y tienes prioridad si al final salen.';
 
 /* Cuenta atrás a la primera salida */
