@@ -305,10 +305,6 @@ header.sc{background:rgba(10,10,10,.96);backdrop-filter:blur(18px);border-bottom
   box-shadow:0 20px 40px -14px rgba(0,0,0,.55),0 0 0 1px var(--lime)}
 .dc-buy:hover .m img{transform:scale(1.04)}
 .dc-buy .m img{transition:transform .5s var(--ease)}
-.dc-buy .dc-pick{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;
-  margin-top:10px;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--lime);opacity:0;transform:translateY(4px);transition:.25s}
-.dc-buy:hover .dc-pick,.dc-buy:focus-visible .dc-pick{opacity:1;transform:translateY(0)}
 
 /* LA CARTA */
 .ct{display:grid;gap:16px}
@@ -2146,8 +2142,7 @@ $('cal').innerHTML = SALIDAS.map(function(s, i){
       + '<a class="pz-w" href="#lista">'
         + (s.agotado ? 'Lista de espera →' : 'Apúntate, prioridad →') + '</a>'
     : (baja ? '<span class="dc-l">Lanzamiento</span>' : '')
-      + '<span class="pz">' + eur(hoy) + (baja ? '<s>' + eur(s.precio) + '</s>' : '') + '</span>'
-      + '<span class="dc-pick">Seleccionar →</span>';
+      + '<span class="pz">' + eur(hoy) + (baja ? '<s>' + eur(s.precio) + '</s>' : '') + '</span>';
 
   /* Las salidas a la venta se pueden elegir tocando/clicando toda la
      tarjeta: te lleva directo a la entrada ya marcada, sin buscarla. */
