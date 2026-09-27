@@ -259,11 +259,17 @@ header.sc{background:rgba(10,10,10,.96);backdrop-filter:blur(18px);border-bottom
     rgba(8,8,8,.34) 80%,
     rgba(8,8,8,.10) 92%,
     transparent 100%)}
-.dc .ix{font-family:var(--disp);font-size:.8rem;color:var(--red);margin-bottom:auto;
+.dc .ix{font-family:var(--disp);font-size:.8rem;color:var(--red);
   text-shadow:0 1px 10px rgba(0,0,0,.7)}
 .dc h3{font-size:1.3rem;margin-bottom:7px;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.55)}
 .dc .wn{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;margin-bottom:8px}
-.dc .wt{font-size:.8rem;color:rgba(255,255,255,.8);line-height:1.5}
+/* margin-top:auto empuja este bloque (descripción + pie) al fondo, dejando
+   arriba el número/título/fecha con su altura natural. La altura fija con
+   line-clamp evita que una descripción de 1 línea o de 3 mueva el pie —
+   así el título queda a la misma altura en todas las tarjetas. */
+.dc .wt{font-size:.8rem;color:rgba(255,255,255,.8);line-height:1.5;margin-top:auto;
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;
+  min-height:2.4rem}
 .dc .pz{display:inline-flex;align-items:baseline;gap:8px;margin-top:12px;font-family:var(--disp);
   font-size:1.2rem;color:var(--on-lime);background:var(--lime);padding:6px 14px;
   border-radius:var(--r);align-self:flex-start}
@@ -290,6 +296,18 @@ header.sc{background:rgba(10,10,10,.96);backdrop-filter:blur(18px);border-bottom
    altura según si la tarjeta lleva precio o "por confirmar" (bloques de
    distinta altura empujando hacia arriba en el flex bottom-anchored). */
 .dc-foot{min-height:88px;display:flex;flex-direction:column;justify-content:flex-end}
+
+/* Tarjetas de salidas a la venta: toda la tarjeta es clicable para
+   seleccionarla en el paso de entradas, con su propio efecto hover. */
+.dc-buy{cursor:pointer;transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.dc-buy:hover,.dc-buy:focus-visible{transform:translateY(-6px);
+  box-shadow:0 20px 40px -14px rgba(0,0,0,.55),0 0 0 1px var(--lime)}
+.dc-buy:hover .m img{transform:scale(1.04)}
+.dc-buy .m img{transition:transform .5s var(--ease)}
+.dc-buy .dc-pick{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;
+  margin-top:10px;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--lime);opacity:0;transform:translateY(4px);transition:.25s}
+.dc-buy:hover .dc-pick,.dc-buy:focus-visible .dc-pick{opacity:1;transform:translateY(0)}
 
 /* LA CARTA */
 .ct{display:grid;gap:16px}
@@ -383,6 +401,7 @@ header.sc{background:rgba(10,10,10,.96);backdrop-filter:blur(18px);border-bottom
 .pk .in .tg.ag{background:var(--red);color:#fff;border-radius:var(--r)}
 .pk .in .tg.pf{border:1px solid var(--muted-2);color:var(--muted);border-radius:var(--r)}
 .pk .in .tg.af{border:1px solid var(--red);color:var(--red);border-radius:var(--r)}
+.light .pk .in .tg.af{border-color:var(--on-lime);background:var(--lime);color:var(--on-lime)}
 
 /* Salida agotada: sigue en la lista, pero ya no se compra */
 .pk.out{opacity:.55;cursor:default}
@@ -2126,9 +2145,14 @@ $('cal').innerHTML = SALIDAS.map(function(s, i){
       + '<a class="pz-w" href="#lista">'
         + (s.agotado ? 'Lista de espera →' : 'Apúntate, prioridad →') + '</a>'
     : (baja ? '<span class="dc-l">Lanzamiento</span>' : '')
-      + '<span class="pz">' + eur(hoy) + (baja ? '<s>' + eur(s.precio) + '</s>' : '') + '</span>';
+      + '<span class="pz">' + eur(hoy) + (baja ? '<s>' + eur(s.precio) + '</s>' : '') + '</span>'
+      + '<span class="dc-pick">Seleccionar →</span>';
 
-  return '<article class="dc rv' + (noVenta ? ' dc-wait' : '') + ((s.id === 'pride-mas' || s.id === 'pride-gal') ? ' dc-pride' : (s.badge ? ' dc-hot' : '')) + '">'
+  /* Las salidas a la venta se pueden elegir tocando/clicando toda la
+     tarjeta: te lleva directo a la entrada ya marcada, sin buscarla. */
+  return '<article class="dc rv' + (noVenta ? ' dc-wait' : ' dc-buy') + ((s.id === 'pride-mas' || s.id === 'pride-gal') ? ' dc-pride' : (s.badge ? ' dc-hot' : '')) + '"'
+    + (noVenta ? '' : ' data-select="' + s.id + '" role="button" tabindex="0" aria-label="Seleccionar ' + s.n + '"')
+    + '>'
     + '<div class="m"><img src="' + s.img + '" alt="' + s.n + '" loading="lazy"></div>'
     + '<div class="ov"><div class="ix">0' + (i+1) + '</div>'
     + (s.badge ? '<span class="dc-badge">' + s.badge + '</span>' : '')
@@ -2627,6 +2651,20 @@ document.getElementById('addon').addEventListener('click', function(e){
   if (!b) return;
   document.querySelector('#pick input[value="' + b.dataset.add + '"]').checked = true;
   actualizar();
+});
+
+/* Tarjetas del calendario (Las Palmas, Maspalomas...): tocar la tarjeta
+   selecciona esa salida en el paso de entradas y baja directo ahí. */
+document.querySelectorAll('#cal .dc-buy[data-select]').forEach(function(card){
+  var seleccionar = function(){
+    var inp = document.querySelector('#pick input[value="' + card.dataset.select + '"]');
+    if (inp) { inp.checked = true; actualizar(); }
+    document.getElementById('entradas').scrollIntoView({ behavior:'smooth', block:'start' });
+  };
+  card.addEventListener('click', seleccionar);
+  card.addEventListener('keydown', function(e){
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); seleccionar(); }
+  });
 });
 
 /* Atajos */
