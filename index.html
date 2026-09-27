@@ -371,6 +371,7 @@ header.sc{background:rgba(10,10,10,.96);backdrop-filter:blur(18px);border-bottom
   display:inline-flex;align-items:center;gap:5px}
 .light .pk .in .tg.bs{border-color:var(--on-lime);background:var(--lime);color:var(--on-lime)}
 .pk .in .tg.ag{background:var(--red);color:#fff;border-radius:var(--r)}
+.pk .in .tg.pf{border:1px solid var(--muted-2);color:var(--muted);border-radius:var(--r)}
 
 /* Salida agotada: sigue en la lista, pero ya no se compra */
 .pk.out{opacity:.55;cursor:default}
@@ -1803,7 +1804,7 @@ footer{border-top:1px solid var(--line);padding:50px 0 28px}
    ═════════════════════════════════════════════════════════════════════════ */
 const SALIDAS = [
   { id:'lpgc', n:'Las Palmas de G.C.', fecha:'Sábado 20 · Febrero 2027', iso:'2027-02-20T16:00:00',
-    precio:120, grande:true, codigo:true, jamon:true, img:'/cal-1.webp',
+    precio:130, grande:true, codigo:true, jamon:true, img:'/cal-1.webp',
     txt:'La Gran Cabalgata. Más de 140.000 personas. Con jamón de bellota cortado a bordo.' },
 
   { id:'mas', n:'Maspalomas', fecha:'Sábado 13 · Marzo 2027', iso:'2027-03-13T17:00:00',
@@ -1812,11 +1813,17 @@ const SALIDAS = [
 
   /* Cuando una salida se agote, ponle  agotado:true  y la web deja de venderla:
      pasa a ofrecer la lista de espera. No la borres — una salida agotada vende
-     las demás mejor que cualquier anuncio. */
-  { id:'car', n:'Carrizal', fecha:'Sábado 20 · Marzo 2027', iso:'2027-03-20T17:00:00',
-    precio:75, img:'/cal-3.webp', txt:'Carnaval de pueblo, del bueno.' },
+     las demás mejor que cualquier anuncio.
 
-  { id:'tel', n:'Telde', fecha:'2027 · fecha por confirmar', precio:75, img:'/cal-6.webp',
+     ESPERA (distinto de agotado): salida que todavía no está decidida —
+     no se vende, pero tampoco decimos que esté agotada. Ponle  espera:true
+     y la web la pasa a "Por confirmar", con el mismo botón de lista de
+     espera pero sin la palabra "Agotado". En cuanto decidas que sale,
+     quítale espera:true (y ponle codigo:true si la quieres con código). */
+  { id:'car', n:'Carrizal', fecha:'Sábado 20 · Marzo 2027', iso:'2027-03-20T17:00:00',
+    precio:75, espera:true, img:'/cal-3.webp', txt:'Carnaval de pueblo, del bueno.' },
+
+  { id:'tel', n:'Telde', fecha:'2027 · fecha por confirmar', precio:75, espera:true, img:'/cal-6.webp',
     txt:'Carnaval de Telde.' },
 
   /* OJO: cal-4.jpg y cal-5.jpg son IMÁGENES DE AMBIENTE generadas, no fotos
@@ -1824,10 +1831,10 @@ const SALIDAS = [
      la carroza ni fingen ser un reportaje. En cuanto salgas en mayo de 2027,
      sustitúyelas por las fotos reales. Es lo primero que hay que cambiar. */
   { id:'pride-mas', n:'Pride de Maspalomas', fecha:'Sábado 8 · Mayo 2027', iso:'2027-05-08T17:00:00',
-    precio:80, premium:true, badge:'Uno de los mayores de Europa', img:'/cal-4.webp',
+    precio:80, premium:true, espera:true, badge:'Uno de los mayores de Europa', img:'/cal-4.webp',
     txt:'Uno de los mayores prides de Europa. El sur, dos meses después de la cabalgata — la carroza vuelve al lugar donde más se la fotografía.' },
 
-  { id:'pride-gal', n:'Pride de Gáldar', fecha:'2027 · fecha por confirmar', precio:75, img:'/cal-5.webp',
+  { id:'pride-gal', n:'Pride de Gáldar', fecha:'2027 · fecha por confirmar', precio:75, espera:true, img:'/cal-5.webp',
     txt:'El pride del norte. Otro día, otro ambiente.' },
 ];
 
@@ -2186,20 +2193,22 @@ var BUS = '<svg viewBox="0 0 24 24" width="9" height="9" fill="currentColor">'
 $('pick').innerHTML = SALIDAS.map(function(s){
   var tags = '';
   if (s.agotado) tags += '<i class="tg ag">Agotado</i>';
+  if (s.espera && !s.agotado) tags += '<i class="tg pf">Por confirmar</i>';
   if (s.grande) tags += '<i class="tg gr">Grande</i>';
   if (s.jamon)  tags += '<i class="tg jm">Jamón de bellota</i>';
   if (s.guagua) tags += '<i class="tg bs">' + BUS + ' Guagua incluida</i>';
   if (s.codigo && !s.agotado) tags += '<i class="tg lk">' + CANDADO + ' Con código</i>';
 
-  /* Una salida agotada NO se puede marcar, pero sigue en la lista y sigue
-     trabajando: empuja a apuntarse a la lista de espera. */
-  if (s.agotado) {
+  /* Una salida agotada o en espera NO se puede marcar, pero sigue en la lista
+     y sigue trabajando: empuja a apuntarse a la lista de espera. Agotado =
+     se acabó el aforo. Espera = todavía no hemos decidido si sale. */
+  if (s.agotado || s.espera) {
     return '<div class="pk out" data-id="' + s.id + '">'
       + '<span class="th"><img src="' + s.img + '" alt="" loading="lazy"></span>'
       + '<span class="in"><b>' + s.n + '</b>'
       +   '<span class="dt">' + s.fecha + '</span>'
       +   '<span class="tags">' + tags + '</span></span>'
-      + '<a class="pz-w" href="#lista">Lista de espera →</a>'
+      + '<a class="pz-w" href="#lista">' + (s.agotado ? 'Lista de espera →' : 'Apúntate, prioridad →') + '</a>'
       + '</div>';
   }
 
