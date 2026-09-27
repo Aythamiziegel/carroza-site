@@ -42,7 +42,7 @@
   --logo:'Cormorant Garamond',Georgia,serif;
   --sans:'Space Grotesk',system-ui,sans-serif;
   --mono:'Space Mono',ui-monospace,'SFMono-Regular',monospace;
-  --maxw:1340px; --pad:22px; --ease:cubic-bezier(.22,1,.36,1); --bar:76px;
+  --maxw:1600px; --pad:22px; --ease:cubic-bezier(.22,1,.36,1); --bar:76px;
   --r:999px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -800,7 +800,7 @@ header.sc{background:rgba(10,10,10,.96);backdrop-filter:blur(18px);border-bottom
 /* LA EDAD */
 .edad{margin-top:34px;display:flex;align-items:flex-start;gap:22px;flex-wrap:wrap;
   padding:26px 24px;border:1px solid var(--line);border-radius:18px;background:var(--ink-2);
-  border-left:3px solid var(--lime);max-width:76ch}
+  border-left:3px solid var(--lime)}
 .ed-n{flex:0 0 auto;font-family:var(--disp);font-size:2.6rem;line-height:1;color:var(--lime)}
 .ed-t{flex:1 1 260px;min-width:0}
 .ed-t h3{font-family:var(--disp);font-size:1.2rem;text-transform:uppercase;color:var(--paper);
@@ -1369,7 +1369,7 @@ footer{border-top:1px solid var(--line);padding:50px 0 28px}
                autocomplete="email" spellcheck="false">
 
         <div class="lst-r">
-          <input type="tel" id="lsTel" placeholder="Tu WhatsApp (+34 …)" required
+          <input type="tel" id="lsTel" placeholder="Tu WhatsApp (opcional)"
                  autocomplete="tel" inputmode="tel">
           <button type="submit" class="btn btn-r">Avísenme</button>
         </div>
@@ -1378,7 +1378,7 @@ footer{border-top:1px solid var(--line);padding:50px 0 28px}
 
         <label class="lst-p">
           <input type="checkbox" id="lsOk" required>
-          <span>Acepto que me escriban por <strong>correo y WhatsApp</strong> sobre la Carroza Ziegel.
+          <span>Acepto que me escriban por <strong>correo</strong> (y por WhatsApp si lo dejo) sobre la Carroza Ziegel.
           Me doy de baja cuando quiera respondiendo BAJA.</span>
         </label>
         <p class="lst-m" id="lsMsg" role="status"></p>
@@ -2537,15 +2537,16 @@ $('formLista').addEventListener('submit', function(e){
   }
   email.classList.remove('err');
 
-  /* El WhatsApp es el canal que la gente abre de verdad. Lo pedimos bien:
-     normalizamos a formato internacional para que sirva en la API. */
-  if (!/^\+?\d{9,15}$/.test(t)) {
+  /* El WhatsApp es opcional: solo el correo es obligatorio (es lo que
+     promete el texto). Si lo dejan, lo validamos y normalizamos a
+     formato internacional para que sirva en la API; si no, se manda vacío. */
+  if (t && !/^\+?\d{9,15}$/.test(t)) {
     tel.classList.add('err');
     msg.className = 'lst-m no'; msg.textContent = 'Pon un WhatsApp válido, con prefijo si no es de España.';
     return;
   }
   tel.classList.remove('err');
-  if (!t.startsWith('+')) t = (t.length === 9 ? '+34' : '+') + t;
+  if (t && !t.startsWith('+')) t = (t.length === 9 ? '+34' : '+') + t;
 
   if (!$('lsOk').checked) {
     msg.className = 'lst-m no'; msg.textContent = 'Marca la casilla y te apuntamos.';
