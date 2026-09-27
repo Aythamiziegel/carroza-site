@@ -934,18 +934,18 @@ footer{border-top:1px solid var(--line);padding:50px 0 28px}
   :root{--pad:36px}
   body{padding-bottom:0}
   .dock{display:none}
-  .sec,.man,.reel{padding:120px 0}
+  .sec,.man,.reel{padding:76px 0}
   .gal{grid-template-columns:repeat(4,1fr);gap:10px}
   .gal .m.w{grid-column:span 2}
   .met{grid-template-columns:repeat(4,1fr)}
   .pasos{grid-template-columns:repeat(3,1fr)}
-  .jam{padding:130px 0;min-height:0;align-items:center}
+  .jam{padding:86px 0;min-height:0;align-items:center}
   .jam-w{grid-template-columns:1fr 1fr;gap:60px;align-items:center}
   .jam-bg img{object-position:65% center;filter:brightness(.46) saturate(1.15) contrast(1.05)}
   .jam-sc{background:
     linear-gradient(to right,rgba(10,10,10,.95) 0%,rgba(10,10,10,.82) 38%,rgba(10,10,10,.25) 100%),
     linear-gradient(to bottom,var(--ink),transparent 20%,transparent 80%,var(--ink))}
-  .regalo{padding:110px 0}
+  .regalo{padding:74px 0}
   .rg{grid-template-columns:1.3fr 1fr;gap:56px}
   .card-g{padding:32px 30px}
   .cg-logo{height:32px}
@@ -1217,184 +1217,13 @@ footer{border-top:1px solid var(--line);padding:50px 0 28px}
 </section>
 
 
-<!-- ══════ LO QUE DICEN ══════
-     Correos REALES de gente que subió en 2026. Están recortados —solo se han
-     quitado saludos y despedidas— pero NO reescritos: cada palabra es suya.
-
-     ANTES DE PUBLICAR: pídeles permiso a las tres. Un WhatsApp basta.
-     Y guarda su respuesta: es lo que te protege si alguna se arrepiente. -->
-<section class="sec voz" id="voz">
-  <div class="wrap">
-    <div class="hd">
-      <div class="n rv">03 — Lo que dicen</div>
-      <div class="rv">
-        <h2 class="d">No te fíes<br><span class="r">de nosotros.</span></h2>
-        <p class="lead">Todo lo que hay en esta web lo escribimos nosotros. Esto no.</p>
-      </div>
-    </div>
-
-    <div class="vz">
-      <figure class="vz-i rv">
-        <blockquote>
-          <p><strong>La mejor carroza en la que he estado en los años que llevo saliendo
-          de carnaval.</strong> Se podría resumir en dos palabras: diversión y respeto.</p>
-          <p>Buen rollo, ambiente estupendo, comodidad, buena música, limpieza y seguridad
-          excelentes… <strong>cada céntimo de lo que pagamos valió la pena.</strong></p>
-        </blockquote>
-        <figcaption><span class="vz-n">Mabel A.</span><span class="vz-y">Temporada 2026</span></figcaption>
-      </figure>
-
-      <figure class="vz-i rv">
-        <blockquote>
-          <p>Hacía <strong>treinta y tantos años que no volvía al carnaval</strong>, y ustedes
-          hicieron que mi experiencia fuera realmente inolvidable.</p>
-          <p>El buen ambiente, el servicio maravilloso, la organización impecable, desde la
-          comida hasta <strong>los baños</strong> —que en estos casos son muy importantes—.
-          Había espacio para bailar, pero sin parecer «desangelado».</p>
-        </blockquote>
-        <figcaption><span class="vz-n">María José C.</span><span class="vz-y">Temporada 2026</span></figcaption>
-      </figure>
-
-      <figure class="vz-i rv">
-        <blockquote>
-          <p><strong>La carroza, estéticamente, un sueño.</strong> La libertad para moverte dentro,
-          comodísimo el espacio, la atención en las barras súper profesional. Todo me encantó.</p>
-          <p><strong>He vivido muchas carrozas</strong>, y te diré que el año pasado me faltaron las
-          ganas, porque vas sumando experiencias que no merecen la pena.
-          <strong>Me has renovado la ilusión.</strong></p>
-        </blockquote>
-        <figcaption><span class="vz-n">Anónima, a petición suya</span><span class="vz-y">Temporada 2026</span></figcaption>
-      </figure>
-    </div>
-
-    <p class="sm rv" style="margin-top:22px">
-      Correos que nos llegaron después de las salidas de 2026, en Las Palmas y en Maspalomas. Publicados con su permiso.
-    </p>
-  </div>
-</section>
-
-<!-- ══════ ENTRADAS ══════ -->
-<section class="sec light" id="entradas">
-  <div class="wrap">
-    <div class="hd">
-      <div class="n rv">04 — Entradas</div>
-      <div class="rv">
-        <h2 class="d">Móntate<br>tu temporada</h2>
-        <p class="lead" id="leadPrecios"></p>
-      </div>
-    </div>
-
-    <!-- ══ EL RELOJ ══ Se muestra solo mientras dure el lanzamiento. -->
-    <div class="urg rv" id="urg" style="margin-bottom:26px">
-      <div class="urg-a">
-        <p class="urg-k">Precio de lanzamiento</p>
-        <p class="urg-t" id="urgT"></p>
-        <div class="urg-cd" id="urgCd"></div>
-      </div>
-      <div class="urg-b">
-        <div class="urg-bar"><span id="urgFill"></span></div>
-        <p class="urg-n" id="urgN"></p>
-      </div>
-    </div>
-
-    <div class="build rv">
-      <div class="bl">
-        <div class="pre">
-          <button class="ps" data-preset="grandes">Las dos grandes</button>
-          <button class="ps" data-preset="nada">Empezar de cero</button>
-        </div>
-        <p class="anc" style="margin:12px 2px 0;font-size:.82rem;color:#5A5A5A;line-height:1.55">
-          <strong style="color:#0A0A0A">Aforo real y limitado: 140 plazas por salida.</strong>
-          El año pasado hubo overbooking y se quedó gente fuera — cuando se agoten, se acabó.
-          El resto de salidas están por confirmar — apúntate en la lista y tienes prioridad si salimos.
-        </p>
-        <div class="picks" id="pick"></div>
-
-        <div class="grp">
-          <div class="grp-l">
-            <span class="grp-t">¿Cuántos vienen?</span>
-            <span class="grp-s" id="grpSub"></span>
-          </div>
-          <div class="grp-c">
-            <button type="button" id="menos" aria-label="Quitar una persona">−</button>
-            <input type="number" id="pax" value="1" min="1" max="60" inputmode="numeric">
-            <button type="button" id="mas" aria-label="Añadir una persona">+</button>
-          </div>
-        </div>
-
-        <div class="esc" id="esc"></div>
-      </div>
-
-      <aside class="br">
-        <div class="sticky">
-          <div id="resumen"></div>
-          <div id="addon"></div>
-          <div id="accion"></div>
-          <p class="gtia" style="margin:0;padding:2px 24px 24px;display:flex;gap:9px;align-items:flex-start;font-size:.82rem;line-height:1.5;color:rgba(255,255,255,.74)">
-            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#CBFF3C" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto;margin-top:1px"><path d="M20 6L9 17l-5-5"/></svg>
-            <span><strong style="color:#fff;font-weight:600">Si se cancela una salida, te devolvemos el 100&nbsp;%.</strong> Sin preguntas. Ya lo hicimos en 2026, cuando el mal tiempo aplazó Maspalomas.</span>
-          </p>
-        </div>
-      </aside>
-    </div>
-
-    <p class="posi rv">
-      El precio no es lo que te llevas.
-      <strong>Lo que te llevas es que dentro de veinte años lo sigas contando.</strong>
-    </p>
-
-    <p class="sm" style="margin-top:24px;max-width:72ch">
-      Aforo limitado por salida. <strong>A partir de 27 años</strong> (o acompañado de alguien que los tenga). Entrada nominativa con validación por código.
-      La guagua a Maspalomas va incluida: al comprar eliges parada en Las Palmas, Telde o Vecindario. Telde y el Pride de Gáldar, pendientes de que se publique la fecha.
-      <strong>A partir de 10 personas hay precio de grupo</strong> en las salidas pequeñas: pongan cuántos son y lo ven al momento.
-    </p>
-
-    
-<!-- ══ LA LISTA ══ Quien no compra hoy, no se pierde. -->
-    <div class="lst rv" id="lista">
-      <div class="lst-t">
-        <p class="lst-k">La lista</p>
-        <h3>¿Todavía no lo tienes claro?</h3>
-        <p class="lst-d">
-          Déjanos tu correo y te avisamos de tres cosas, y solo de tres:
-          cuando <strong>se acabe el precio de lanzamiento</strong>,
-          cuando <strong>se confirmen las fechas</strong> de Telde y Gáldar,
-          y cuando <strong>se libere una plaza</strong> en una salida agotada.
-        </p>
-        <p class="lst-n">Nada más. Ni promociones, ni cadenas, ni tu correo vendido a nadie.</p>
-      </div>
-
-      <form class="lst-f" id="formLista" novalidate>
-        <input type="email" id="lsEmail" placeholder="Tu correo" required
-               autocomplete="email" spellcheck="false">
-
-        <div class="lst-r">
-          <input type="tel" id="lsTel" placeholder="Tu WhatsApp (opcional)"
-                 autocomplete="tel" inputmode="tel">
-          <button type="submit" class="btn btn-r">Avísenme</button>
-        </div>
-
-        <div class="lst-c" id="lsSalidas"></div>
-
-        <label class="lst-p">
-          <input type="checkbox" id="lsOk" required>
-          <span>Acepto que me escriban por <strong>correo</strong> (y por WhatsApp si lo dejo) sobre la Carroza Ziegel.
-          Me doy de baja cuando quiera respondiendo BAJA.</span>
-        </label>
-        <p class="lst-m" id="lsMsg" role="status"></p>
-      </form>
-    </div>
-  </div>
-</section>
-
-
 <!-- ══════ LA CARTA ══════
      EDITAR: si cambia una marca, cámbiala aquí y ya está.
      El aviso de disponibilidad es importante: déjalo. -->
 <section class="sec carta" id="carta">
   <div class="wrap">
     <div class="hd">
-      <div class="n rv">05 — La carta</div>
+      <div class="n rv">03 — La carta</div>
       <div class="rv">
         <h2 class="d">Detrás de<br><span class="r">la barra.</span></h2>
         <p class="lead">Aquí nadie sube a beber lo de siempre. Esto es lo que hubo la temporada
@@ -1565,6 +1394,177 @@ footer{border-top:1px solid var(--line);padding:50px 0 28px}
 
     <div class="ban-i rv">
       <div class="m"><img src="/bano.webp" alt="Uno de los tres baños de diseño de la Carroza Ziegel" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════ LO QUE DICEN ══════
+     Correos REALES de gente que subió en 2026. Están recortados —solo se han
+     quitado saludos y despedidas— pero NO reescritos: cada palabra es suya.
+
+     ANTES DE PUBLICAR: pídeles permiso a las tres. Un WhatsApp basta.
+     Y guarda su respuesta: es lo que te protege si alguna se arrepiente. -->
+<section class="sec voz" id="voz">
+  <div class="wrap">
+    <div class="hd">
+      <div class="n rv">04 — Lo que dicen</div>
+      <div class="rv">
+        <h2 class="d">No te fíes<br><span class="r">de nosotros.</span></h2>
+        <p class="lead">Todo lo que hay en esta web lo escribimos nosotros. Esto no.</p>
+      </div>
+    </div>
+
+    <div class="vz">
+      <figure class="vz-i rv">
+        <blockquote>
+          <p><strong>La mejor carroza en la que he estado en los años que llevo saliendo
+          de carnaval.</strong> Se podría resumir en dos palabras: diversión y respeto.</p>
+          <p>Buen rollo, ambiente estupendo, comodidad, buena música, limpieza y seguridad
+          excelentes… <strong>cada céntimo de lo que pagamos valió la pena.</strong></p>
+        </blockquote>
+        <figcaption><span class="vz-n">Mabel A.</span><span class="vz-y">Temporada 2026</span></figcaption>
+      </figure>
+
+      <figure class="vz-i rv">
+        <blockquote>
+          <p>Hacía <strong>treinta y tantos años que no volvía al carnaval</strong>, y ustedes
+          hicieron que mi experiencia fuera realmente inolvidable.</p>
+          <p>El buen ambiente, el servicio maravilloso, la organización impecable, desde la
+          comida hasta <strong>los baños</strong> —que en estos casos son muy importantes—.
+          Había espacio para bailar, pero sin parecer «desangelado».</p>
+        </blockquote>
+        <figcaption><span class="vz-n">María José C.</span><span class="vz-y">Temporada 2026</span></figcaption>
+      </figure>
+
+      <figure class="vz-i rv">
+        <blockquote>
+          <p><strong>La carroza, estéticamente, un sueño.</strong> La libertad para moverte dentro,
+          comodísimo el espacio, la atención en las barras súper profesional. Todo me encantó.</p>
+          <p><strong>He vivido muchas carrozas</strong>, y te diré que el año pasado me faltaron las
+          ganas, porque vas sumando experiencias que no merecen la pena.
+          <strong>Me has renovado la ilusión.</strong></p>
+        </blockquote>
+        <figcaption><span class="vz-n">Anónima, a petición suya</span><span class="vz-y">Temporada 2026</span></figcaption>
+      </figure>
+    </div>
+
+    <p class="sm rv" style="margin-top:22px">
+      Correos que nos llegaron después de las salidas de 2026, en Las Palmas y en Maspalomas. Publicados con su permiso.
+    </p>
+  </div>
+</section>
+
+<!-- ══════ ENTRADAS ══════ -->
+<section class="sec light" id="entradas">
+  <div class="wrap">
+    <div class="hd">
+      <div class="n rv">05 — Entradas</div>
+      <div class="rv">
+        <h2 class="d">Móntate<br>tu temporada</h2>
+        <p class="lead" id="leadPrecios"></p>
+      </div>
+    </div>
+
+    <!-- ══ EL RELOJ ══ Se muestra solo mientras dure el lanzamiento. -->
+    <div class="urg rv" id="urg" style="margin-bottom:26px">
+      <div class="urg-a">
+        <p class="urg-k">Precio de lanzamiento</p>
+        <p class="urg-t" id="urgT"></p>
+        <div class="urg-cd" id="urgCd"></div>
+      </div>
+      <div class="urg-b">
+        <div class="urg-bar"><span id="urgFill"></span></div>
+        <p class="urg-n" id="urgN"></p>
+      </div>
+    </div>
+
+    <div class="build rv">
+      <div class="bl">
+        <div class="pre">
+          <button class="ps" data-preset="grandes">Las dos grandes</button>
+          <button class="ps" data-preset="nada">Empezar de cero</button>
+        </div>
+        <p class="anc" style="margin:12px 2px 0;font-size:.82rem;color:#5A5A5A;line-height:1.55">
+          <strong style="color:#0A0A0A">Aforo real y limitado: 140 plazas por salida.</strong>
+          El año pasado hubo overbooking y se quedó gente fuera — cuando se agoten, se acabó.
+          El resto de salidas están por confirmar — apúntate en la lista y tienes prioridad si salimos.
+        </p>
+        <div class="picks" id="pick"></div>
+
+        <div class="grp">
+          <div class="grp-l">
+            <span class="grp-t">¿Cuántos vienen?</span>
+            <span class="grp-s" id="grpSub"></span>
+          </div>
+          <div class="grp-c">
+            <button type="button" id="menos" aria-label="Quitar una persona">−</button>
+            <input type="number" id="pax" value="1" min="1" max="60" inputmode="numeric">
+            <button type="button" id="mas" aria-label="Añadir una persona">+</button>
+          </div>
+        </div>
+
+        <div class="esc" id="esc"></div>
+      </div>
+
+      <aside class="br">
+        <div class="sticky">
+          <div id="resumen"></div>
+          <div id="addon"></div>
+          <div id="accion"></div>
+          <p class="gtia" style="margin:0;padding:2px 24px 24px;display:flex;gap:9px;align-items:flex-start;font-size:.82rem;line-height:1.5;color:rgba(255,255,255,.74)">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#CBFF3C" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto;margin-top:1px"><path d="M20 6L9 17l-5-5"/></svg>
+            <span><strong style="color:#fff;font-weight:600">Si se cancela una salida, te devolvemos el 100&nbsp;%.</strong> Sin preguntas. Ya lo hicimos en 2026, cuando el mal tiempo aplazó Maspalomas.</span>
+          </p>
+        </div>
+      </aside>
+    </div>
+
+    <p class="posi rv">
+      El precio no es lo que te llevas.
+      <strong>Lo que te llevas es que dentro de veinte años lo sigas contando.</strong>
+    </p>
+
+    <p class="sm" style="margin-top:24px;max-width:72ch">
+      Aforo limitado por salida. <strong>A partir de 27 años</strong> (o acompañado de alguien que los tenga). Entrada nominativa con validación por código.
+      La guagua a Maspalomas va incluida: al comprar eliges parada en Las Palmas, Telde o Vecindario. Telde y el Pride de Gáldar, pendientes de que se publique la fecha.
+      <strong>A partir de 10 personas hay precio de grupo</strong> en las salidas pequeñas: pongan cuántos son y lo ven al momento.
+    </p>
+
+    
+<!-- ══ LA LISTA ══ Quien no compra hoy, no se pierde. -->
+    <div class="lst rv" id="lista">
+      <div class="lst-t">
+        <p class="lst-k">La lista</p>
+        <h3>¿Todavía no lo tienes claro?</h3>
+        <p class="lst-d">
+          Déjanos tu correo y te avisamos de tres cosas, y solo de tres:
+          cuando <strong>se acabe el precio de lanzamiento</strong>,
+          cuando <strong>se confirmen las fechas</strong> de Telde y Gáldar,
+          y cuando <strong>se libere una plaza</strong> en una salida agotada.
+        </p>
+        <p class="lst-n">Nada más. Ni promociones, ni cadenas, ni tu correo vendido a nadie.</p>
+      </div>
+
+      <form class="lst-f" id="formLista" novalidate>
+        <input type="email" id="lsEmail" placeholder="Tu correo" required
+               autocomplete="email" spellcheck="false">
+
+        <div class="lst-r">
+          <input type="tel" id="lsTel" placeholder="Tu WhatsApp (opcional)"
+                 autocomplete="tel" inputmode="tel">
+          <button type="submit" class="btn btn-r">Avísenme</button>
+        </div>
+
+        <div class="lst-c" id="lsSalidas"></div>
+
+        <label class="lst-p">
+          <input type="checkbox" id="lsOk" required>
+          <span>Acepto que me escriban por <strong>correo</strong> (y por WhatsApp si lo dejo) sobre la Carroza Ziegel.
+          Me doy de baja cuando quiera respondiendo BAJA.</span>
+        </label>
+        <p class="lst-m" id="lsMsg" role="status"></p>
+      </form>
     </div>
   </div>
 </section>
