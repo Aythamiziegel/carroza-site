@@ -281,6 +281,11 @@ header.sc{background:rgba(10,10,10,.96);backdrop-filter:blur(18px);border-bottom
 .dc-pride .dc-badge{color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.35);
   background:linear-gradient(90deg,#E0245E,#F5A623,#3EC46D,#3498DB,#9B59B6)}
 
+/* Salida sin fecha decidida: no se vende todavía, solo lista de espera */
+.dc-wait .m img{filter:grayscale(1) brightness(.6)}
+.dc-l.wait{color:var(--muted);border-color:var(--muted-2)}
+.dc-l.ag{color:var(--red);border-color:var(--red)}
+
 /* LA CARTA */
 .ct{display:grid;gap:16px}
 .ct-c{border:1px solid var(--line);border-radius:18px;padding:26px 24px;background:var(--ink-2)}
@@ -2093,16 +2098,26 @@ $('cal').innerHTML = SALIDAS.map(function(s, i){
      aquí mismo, sin tener que bajar hasta la sección de entradas. */
   var hoy = s.grande ? precioGrande(s) : precioPeq(s);
   var baja = hoy < s.precio;
-  return '<article class="dc rv' + ((s.id === 'pride-mas' || s.id === 'pride-gal') ? ' dc-pride' : (s.badge ? ' dc-hot' : '')) + '">'
+
+  /* Las salidas en espera o agotadas NO se venden: aquí se ve igual que en
+     el selector de entradas, con su "por confirmar" y sin precio de compra. */
+  var noVenta = s.agotado || s.espera;
+  var bloquePrecio = noVenta
+    ? '<span class="dc-l ' + (s.agotado ? 'ag' : 'wait') + '">'
+        + (s.agotado ? 'Agotado' : 'Por confirmar') + '</span>'
+      + '<a class="pz-w" href="#lista">'
+        + (s.agotado ? 'Lista de espera →' : 'Apúntate, prioridad →') + '</a>'
+    : (baja ? '<span class="dc-l">Lanzamiento</span>' : '')
+      + '<span class="pz">' + eur(hoy) + (baja ? '<s>' + eur(s.precio) + '</s>' : '') + '</span>';
+
+  return '<article class="dc rv' + (noVenta ? ' dc-wait' : '') + ((s.id === 'pride-mas' || s.id === 'pride-gal') ? ' dc-pride' : (s.badge ? ' dc-hot' : '')) + '">'
     + '<div class="m"><img src="' + s.img + '" alt="' + s.n + '" loading="lazy"></div>'
     + '<div class="ov"><div class="ix">0' + (i+1) + '</div>'
     + (s.badge ? '<span class="dc-badge">' + s.badge + '</span>' : '')
     + '<h3 class="d">' + s.n + '</h3>'
     + '<div class="wn">' + s.fecha + '</div>'
     + '<p class="wt">' + s.txt + '</p>'
-    + (baja ? '<span class="dc-l">Lanzamiento</span>' : '')
-    + '<span class="pz">' + eur(hoy)
-    +   (baja ? '<s>' + eur(s.precio) + '</s>' : '') + '</span>'
+    + bloquePrecio
     + '</div></article>';
 }).join('');
 
