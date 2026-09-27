@@ -2202,7 +2202,8 @@ var pidiendoCodigo = false;
 function actualizar(){
   var ids = elegidas();
   document.querySelectorAll('#pick .pk').forEach(function(l){
-    l.classList.toggle('on', l.querySelector('input').checked);
+    var inp = l.querySelector('input');
+    l.classList.toggle('on', !!inp && inp.checked);
   });
 
   /* Si hay un Pride en el carrito (Maspalomas o Gáldar), el cuadro se viste de arcoíris */
@@ -2637,9 +2638,9 @@ if (!ANTICIPADA) {
   $('urgFill').style.width = Math.max(pct, 3) + '%';
 
   /* El reloj hasta el 31 de diciembre, latiendo de verdad */
-  var fin = new Date(A.hasta).getTime();
+  var finLanz = new Date(A.hasta).getTime();
   var tic = function(){
-    var t = fin - Date.now();
+    var t = finLanz - Date.now();
     if (t <= 0) { $('urg').style.display = 'none'; return; }
     var d = Math.floor(t / 86400000);
     var h = Math.floor(t / 3600000) % 24;
