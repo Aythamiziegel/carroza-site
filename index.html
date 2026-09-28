@@ -2130,7 +2130,6 @@ const minimo = Math.min.apply(null, SALIDAS.map(s => s.precio));
 /* Calendario */
 
 /* ═══════ CONSTRUCTOR DE TEMPORADA ═══════ */
-var codigoOK = null;
 var sal = function(id){ return SALIDAS.filter(function(s){ return s.id === id; })[0]; };
 
 /* ═══ ¿Sigue viva la compra anticipada? ═══
@@ -2282,8 +2281,6 @@ var elegidas = function(){
     .map(function(i){ return i.value; });
 };
 
-var pidiendoCodigo = false;
-
 function actualizar(){
   var ids = elegidas();
   document.querySelectorAll('#pick .pk').forEach(function(l){
@@ -2350,7 +2347,6 @@ function actualizar(){
   var ahorro = (r.bruto - r.total) * PAX;
   var totalGrupo = r.total * PAX;
   var conCandado = ids.filter(function(id){ return sal(id).codigo; });
-  var necesitaCodigo = ACCESO.activo && conCandado.length > 0 && !codigoOK;
 
   /* ─── Resumen: primero el deseo ─── */
   var lista = ids.map(function(id){
@@ -2426,27 +2422,18 @@ function actualizar(){
       + '<span class="ar">→</span></button>'
     : '';
 
-  /* ─── Botón: SIEMPRE rojo. El código no viaja en la URL (ver TT_EVENTOS) ─── */
+  /* ─── Botón: SIEMPRE rojo. El código NO se pide aquí: se pide dentro de
+     Ticket Tailor, en la propia pantalla de pago. Aquí solo avisamos, para
+     que nadie se sorprenda al llegar. Quien no tenga código, que lo pida. ─── */
   var url = ttURL({ ref: ids.join('-'), ids: ids });
 
   var puerta = '';
-  if (codigoOK && conCandado.length) {
-    puerta = '<div class="gt ok">' + CANDADO + ' Código <strong>' + codigoOK + '</strong> verificado'
-           + ' · te lo volverán a pedir al pagar</div>';
-  } else if (necesitaCodigo && pidiendoCodigo) {
+  if (ACCESO.activo && conCandado.length) {
     puerta =
         '<div class="gt abierta">'
-      +   '<div class="gt-h">' + CANDADO + ' Aforo por invitación</div>'
-      +   '<div class="gt-f">'
-      +     '<input type="text" id="cod" placeholder="Escribe tu código" autocomplete="off" spellcheck="false">'
-      +     '<button type="button" id="btnCod">Entrar</button>'
-      +   '</div>'
+      +   '<div class="gt-h">' + CANDADO + ' Te pediremos tu código de acceso en la pantalla de pago</div>'
       +   '<a href="' + ACCESO.pedirCodigo + '" target="_blank" rel="noopener" class="gt-a">No tengo código · Pídelo aquí →</a>'
       + '</div>';
-  } else if (necesitaCodigo) {
-    puerta = '<p class="tt-foot">' + CANDADO + ' '
-           + conCandado.map(function(id){ return sal(id).n; }).join(' y ')
-           + ' requiere' + (conCandado.length > 1 ? 'n' : '') + ' código de acceso</p>';
   }
 
   /* ─── Grupo: no lo mandes a un formulario. Lo cierras tú. ─── */
@@ -2476,37 +2463,12 @@ function actualizar(){
 
   $('cta').addEventListener('click', function(e){
     e.preventDefault();
-    /* Si faltan códigos, primero la puerta */
-    if (necesitaCodigo) {
-      pidiendoCodigo = true;
-      actualizar();
-      var i = $('cod'); if (i) i.focus();
-      return;
-    }
-    /* Y si no, la compra ocurre AQUÍ. El comprador no se va a ningún lado. */
+    /* La compra ocurre AQUÍ directamente, sin pantalla intermedia. El
+       código (si hace falta) lo pide Ticket Tailor en su propia pantalla
+       de pago, no antes. */
     if (TT.modo === 'nueva') { window.open(url, '_blank', 'noopener'); return; }
     abrirCompra(url);
   });
-  if (necesitaCodigo && pidiendoCodigo) {
-    var inp = $('cod');
-    var probar = function(){
-      var v = inp.value.trim();
-      if (!v) { inp.classList.add('err'); return; }
-      codigoOK = v.toUpperCase();
-      pidiendoCodigo = false;
-      /* El código ya está puesto: se compra AHORA MISMO, sin pedir un
-         segundo clic en "Comprar". El código NO se manda en la URL (lo
-         pedirá Ticket Tailor otra vez); esto solo abre la ficha del
-         evento correcto. */
-      var urlSinCodigo = ttURL({ ref: ids.join('-'), ids: ids });
-      if (TT.modo === 'nueva') { window.open(urlSinCodigo, '_blank', 'noopener'); }
-      else { abrirCompra(urlSinCodigo); }
-      actualizar();
-    };
-    $('btnCod').addEventListener('click', probar);
-    inp.addEventListener('keydown', function(e){ if (e.key === 'Enter') probar(); });
-    inp.addEventListener('input', function(){ inp.classList.remove('err'); });
-  }
 }
 
 /* ═══════ DESPUÉS DE PAGAR ═══════
@@ -2726,8 +2688,6 @@ document.querySelectorAll('[data-preset]').forEach(function(b){
       var s = SALIDAS.filter(function(x){ return x.id === i.value; })[0];
       i.checked = p === 'todo' ? true : (p === 'grandes' ? !!s.grande : false);
     });
-    if (p === 'nada') { codigoOK = null; }
-    pidiendoCodigo = false;
     actualizar();
   });
 });
