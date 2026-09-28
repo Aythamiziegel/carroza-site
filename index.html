@@ -275,9 +275,13 @@ header.sc{background:rgba(10,10,10,.96);backdrop-filter:blur(18px);border-bottom
   font-size:1.2rem;color:var(--on-lime);background:var(--lime);padding:6px 14px;
   border-radius:var(--r);align-self:flex-start}
 .dc .pz s{font-family:var(--sans);font-size:.68rem;font-weight:600;opacity:.55;text-decoration:line-through}
-.dc-l{display:inline-block;align-self:flex-start;margin-top:12px;margin-bottom:-4px;
+.dc-l{display:inline-block;align-self:flex-start;margin-top:12px;
   font-size:.54rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
   color:var(--lime);border:1px solid var(--lime);padding:4px 9px;border-radius:var(--r)}
+/* Solo la etiqueta "Lanzamiento" se pega al precio de debajo (el -4px). El
+   pie de "por confirmar"/"agotado" lleva su propio link justo debajo (ver
+   dc-foot .pz-w): con el mismo -4px quedaban pegados y difíciles de leer. */
+.dc-l:not(.wait):not(.ag){margin-bottom:-4px}
 .dc-badge{align-self:flex-start;margin-bottom:9px;font-size:.54rem;font-weight:700;
   letter-spacing:.12em;text-transform:uppercase;color:var(--on-lime);background:var(--lime);
   padding:5px 11px;border-radius:var(--r)}
@@ -292,6 +296,9 @@ header.sc{background:rgba(10,10,10,.96);backdrop-filter:blur(18px);border-bottom
 .dc-wait .m img{filter:grayscale(1) brightness(.6)}
 .dc-l.wait{color:var(--muted);border-color:var(--muted-2)}
 .dc-l.ag{color:var(--red);border-color:var(--red)}
+/* El enlace de "Apúntate"/"Lista de espera" va justo bajo el aviso de
+   arriba: necesita su propio hueco, no puede heredar el -4px del precio. */
+.dc-foot .pz-w{margin-top:11px;display:inline-block}
 
 /* Pie de tarjeta con altura fija: sin esto, el título flota a distinta
    altura según si la tarjeta lleva precio o "por confirmar" (bloques de
@@ -2159,7 +2166,7 @@ $('cal').innerHTML = SALIDAS.map(function(s, i){
   var bloquePrecio = noVenta
     ? '<span class="dc-l ' + (s.agotado ? 'ag' : 'wait') + '">'
         + (s.agotado ? 'Agotado' : 'Por confirmar') + '</span>'
-      + '<a class="pz-w" href="#lista">'
+      + '<a class="pz-w" href="#lista" data-salida="' + s.id + '">'
         + (s.agotado ? 'Lista de espera →' : 'Apúntate, prioridad →') + '</a>'
     : (baja ? '<span class="dc-l">Lanzamiento</span>' : '')
       + '<span class="pz">' + eur(hoy) + (baja ? '<s>' + eur(s.precio) + '</s>' : '') + '</span>';
@@ -2254,7 +2261,7 @@ $('pick').innerHTML = SALIDAS.map(function(s){
       + '<span class="in"><b>' + s.n + '</b>'
       +   '<span class="dt">' + s.fecha + '</span>'
       +   '<span class="tags">' + tags + '</span></span>'
-      + '<a class="pz-w" href="#lista">' + (s.agotado ? 'Lista de espera →' : 'Apúntate, prioridad →') + '</a>'
+      + '<a class="pz-w" href="#lista" data-salida="' + s.id + '">' + (s.agotado ? 'Lista de espera →' : 'Apúntate, prioridad →') + '</a>'
       + '</div>';
   }
 
@@ -2550,6 +2557,25 @@ document.querySelectorAll('#lsSalidas label').forEach(function(l){
   l.addEventListener('click', function(){
     setTimeout(function(){ l.classList.toggle('on', l.querySelector('input').checked); }, 0);
   });
+});
+
+/* Si vienen de "Apúntate, prioridad" en una salida concreta (tarjeta del
+   calendario o fila del selector), marcamos esa salida sola en la lista.
+   Antes el enlace era genérico: la gente llegaba, no tocaba ninguna casilla
+   y se apuntaba con "Todas" — sin saber a qué carnaval en concreto quería
+   ir. Ahora, si viene de un enlace concreto, se lo marcamos nosotros. */
+document.addEventListener('click', function(e){
+  var a = e.target.closest('a.pz-w[data-salida]');
+  if (!a) return;
+  var label = document.querySelector('#lsSalidas label[data-ls="' + a.dataset.salida + '"]');
+  if (!label) return;
+  /* Solo esa: si venían otras marcadas de un intento anterior, las quitamos
+     para que quede claro cuál es el interés que trae este clic. */
+  document.querySelectorAll('#lsSalidas input:checked').forEach(function(i){
+    i.checked = false; i.closest('label').classList.remove('on');
+  });
+  label.querySelector('input').checked = true;
+  label.classList.add('on');
 });
 
 $('formLista').addEventListener('submit', function(e){
