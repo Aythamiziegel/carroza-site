@@ -2033,18 +2033,31 @@ const REGALO = {
    El código de acceso viaja solo en la URL (&a=CODIGO): quien tiene código
    ve las entradas de Las Palmas y Maspalomas; quien no, no las ve.          */
 const TT = {
-  boxoffice: 'wrongpass',   // ← lo único que tienes que cambiar
+  boxoffice: 'carrozaziegel',   // ← lo único que tienes que cambiar
   dominio:   '',                // ej: 'entradas.carrozadecarnaval.com' (recomendado)
   modo:      'ventana',         // 'ventana' = dentro de tu web · 'nueva' = pestaña aparte
 };
 
+/* Cada salida con código es, en Ticket Tailor, un EVENTO propio (no un
+   ticket dentro de un único evento). Este mapa id de salida → id de evento
+   en Ticket Tailor (el número que va después de /carrozaziegel/ en el
+   enlace de "View event page") deja que el comprador aterrice directo en
+   la ficha correcta, con el código ya aplicado, sin pasar por el listado
+   general ni tener que volver a escribirlo. Si compra varias salidas
+   distintas a la vez (p.ej. "Las dos grandes"), no hay una única ficha
+   que sirva para ambas, así que se usa el listado general — sigue
+   funcionando, solo pide el código otra vez ahí. */
+const TT_EVENTOS = { lpgc:'2441511', mas:'2441529' };
+
 /* Construye la URL del widget con lo que haya elegido el comprador. */
 var ttURL = function(opts){
   opts = opts || {};
+  var eventoIds = (opts.ids || []).map(function(id){ return TT_EVENTOS[id]; }).filter(Boolean);
+  var idUnico = eventoIds.length === 1 ? eventoIds[0] : null;
   var base = TT.dominio
     ? 'https://' + TT.dominio
     : 'https://www.tickettailor.com/checkout/view-event/id/' + TT.boxoffice;
-  var url = TT.dominio ? base : 'https://buytickets.at/' + TT.boxoffice;
+  var url = TT.dominio ? base : 'https://buytickets.at/' + TT.boxoffice + (idUnico ? '/' + idUnico : '');
   var q = [];
   if (opts.codigo) q.push('a=' + encodeURIComponent(opts.codigo));
   if (opts.ref)    q.push('ref=' + encodeURIComponent(opts.ref));
@@ -2402,7 +2415,7 @@ function actualizar(){
     : '';
 
   /* ─── Botón: SIEMPRE rojo. El código, solo cuando va a pagar ─── */
-  var url = ttURL({ codigo: codigoOK, ref: ids.join('-') });
+  var url = ttURL({ codigo: codigoOK, ref: ids.join('-'), ids: ids });
 
   var puerta = '';
   if (codigoOK && conCandado.length) {
@@ -2471,7 +2484,7 @@ function actualizar(){
       /* El código ya está puesto: se compra AHORA MISMO, sin pedir un
          segundo clic en "Comprar". Recalculamos la URL con el código ya
          aplicado (la de arriba se generó sin él). */
-      var urlConCodigo = ttURL({ codigo: codigoOK, ref: ids.join('-') });
+      var urlConCodigo = ttURL({ codigo: codigoOK, ref: ids.join('-'), ids: ids });
       if (TT.modo === 'nueva') { window.open(urlConCodigo, '_blank', 'noopener'); }
       else { abrirCompra(urlConCodigo); }
       actualizar();
